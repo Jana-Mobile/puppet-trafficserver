@@ -1,4 +1,4 @@
-#   Copyright 2013 Brainsware
+#   Copyright 2014 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -19,27 +19,27 @@
 #       'ssl_key_name'  => 'barKey.pem',
 #       'ssl_ca_name'   => 'Ca.pem'
 #     },
-define trafficserver::config::ssl (
-  $ssl_host = {},
-  $ssl_hosts = [ $ssl_host ],
+define trafficserver::config::ssl_host (
+  $ssl_cert_name,
+  $dest_ip        = undef,
+  $ssl_key_name   = undef,
+  $ssl_ca_name    = undef,
+  $ssl_key_dialog = undef,
 ){
   include 'trafficserver'
   include 'trafficserver::ssl'
 
 
-  $configfile = "${::trafficserver::sysconfdir}/${trafficserver::params::ssl_config}"
-  $template   = $trafficserver::params::ssl_config_template
-  $comment    = $title
+  $configfile  = "${::trafficserver::sysconfdir}/${::trafficserver::params::ssl_config}"
 
-  validate_array ( $ssl_hosts )
-  validate_hash ( $ssl_hosts[0] )
-  unless has_key ($ssl_hosts[0], 'ssl_cert_name') {
-    fail("trafficserver::config::ssl[${title}] ssl_hosts does not contain a key ssl_cert_name.")
-  }
-
-  concat::fragment { "${configfile}_${comment}":
-    target  => $configfile,
-    content => template($template),
-    notify  => Exec[trafficserver-config-reload],
+  datacat_fragment { 'SSL Config':
+    target => $configfile,
+    data   => {
+      ssl_cert_name  => $ssl_cert_name,
+      dest_ip        => $dest_ip,
+      ssl_key_name   => $ssl_key_name,
+      ssl_ca_name    => $ssl_ca_name,
+      ssl_key_dialog => $ssl_key_dialog,
+    }
   }
 }

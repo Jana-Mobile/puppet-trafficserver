@@ -1,4 +1,4 @@
-#   Copyright 2013 Brainsware
+#   Copyright 2014 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -19,10 +19,11 @@ class trafficserver::ssl inherits trafficserver {
   $configfile  = "${::trafficserver::sysconfdir}/${::trafficserver::params::ssl_config}"
   $conf_header = $::trafficserver::params::ssl_config_header
 
-  # creates the configuration
-  datacat { $configfile:
+  datacat { 'SSL Config':
+    target   => $configfile,
     template => $ssl_config_template,
     owner    => $user,
     group    => $group,
+    notify   => Exec[trafficserver-config-reload],
   }
 }
