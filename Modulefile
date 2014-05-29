@@ -23,4 +23,4 @@ project_page 'https://github.com/Brainsware.org/puppet-trafficserver'
 
 ## Add dependencies, if any:
 dependency 'puppetlabs/stdlib', '>= 4.1.0'
-dependency 'puppetlabs/concat', '>= 1.0.0'
+dependency 'richardc/datacat',  '>= 0.5.0'
