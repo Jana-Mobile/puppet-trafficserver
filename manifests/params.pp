@@ -82,8 +82,7 @@ class trafficserver::params {
 
   $ssl                = false
   $ssl_config         = 'ssl_multicert.config'
-  $ssl_config_header  = 'puppet:///modules/trafficserver/ssl_multicert_header'
-  $ssl_config_template= 'trafficserver/ssl_multicert.config.erb'
+  $ssl_config_template= "${module_name}/ssl_multicert.config.erb"
 
   case $::operatingsystem {
     '/(Darwin|FreeBSD)/': {

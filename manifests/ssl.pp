@@ -20,14 +20,9 @@ class trafficserver::ssl inherits trafficserver {
   $conf_header = $::trafficserver::params::ssl_config_header
 
   # creates the configuration
-  concat { $configfile:
-    owner   => $user,
-    group   => $group,
-  }
-
-  concat::fragment { "${configfile}_header":
-    target => $configfile,
-    source => $conf_header,
-    order  => '00',
+  datacat { $configfile:
+    template => $ssl_config_template,
+    owner    => $user,
+    group    => $group,
   }
 }
