@@ -1,12 +1,11 @@
 require 'spec_helper_acceptance'
 
-describe '<%= metadata.name %> class' do
-
+describe 'trafficserver class' do
   context 'default parameters' do
     # Using puppet_apply as a helper
     it 'should work with no errors' do
       pp = <<-EOS
-      class { '<%= metadata.name %>': }
+      class { 'trafficserver': }
       EOS
 
       # Run it twice and test for idempotency
@@ -14,11 +13,11 @@ describe '<%= metadata.name %> class' do
       expect(apply_manifest(pp).exit_code).to eq(0)
     end
 
-    describe package('<%= metadata.name %>') do
+    describe package('trafficserver') do
       it { should be_installed }
     end
 
-    describe service('<%= metadata.name %>') do
+    describe service('trafficserver') do
       it { should be_enabled }
       it { should be_running }
     end
