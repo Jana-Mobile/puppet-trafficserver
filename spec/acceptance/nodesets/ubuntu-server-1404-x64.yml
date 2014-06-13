@@ -1,0 +1,12 @@
+HOSTS:
+  ubuntu-server-1404-x64:
+    roles:
+      - master
+    platform: ubuntu-server-14.04-amd64
+    box: ubuntu-14.04-server-x86_64-baseline-rise
+    box_url: https://files.rise-world.com/vagrant-boxes/ubuntu-14.04-server-x86_64-baseline-rise.box
+    hypervisor: vagrant
+
+CONFIG:
+  log_level: verbose
+  type: foss
