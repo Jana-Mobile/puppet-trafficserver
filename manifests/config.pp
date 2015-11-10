@@ -20,7 +20,9 @@ class trafficserver::config inherits trafficserver {
 
   class { '::trafficserver::storage': }
 
-  $port_changes = [ "set proxy.config.http.server_ports \"${port}\"" ]
+  # FIXME: proxy.config.http.server_ports parameter was not available in 3.x
+  # which is what we're using internally.
+  $port_changes = [ "set proxy.config.http.server_port \"${port}\"" ]
   trafficserver::config::records { 'port':
     changes => $port_changes,
   }
